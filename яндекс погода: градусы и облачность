@@ -1,0 +1,25 @@
+import urllib.request
+import re
+
+regTag = re.compile('<.*?>', flags=re.DOTALL)
+regSpace = re.compile('\s{2,}', flags=re.DOTALL)
+
+req = urllib.request.Request('https://yandex.ru/pogoda/moscow/')
+with urllib.request.urlopen(req) as response:
+   html = response.read().decode('utf-8')
+regOblachnost = re.compile('<span class="current-weather__comment">.*?</span>', flags =  re.DOTALL)
+regGradusi = re.compile('<div class="current-weather__thermometer current-weather__thermometer_type_now">.*?</div>', flags= re.DOTALL)
+gradusi = regGradusi.findall(html)
+oblachnost = regOblachnost.findall(html)
+
+new_titles=[]
+for t in oblachnost:
+    clean_t = regSpace.sub("", t)
+    clean_t = regTag.sub("", clean_t)
+    new_titles.append(clean_t)
+for t in gradusi:
+    clean_t = regSpace.sub("", t)
+    clean_t = regTag.sub("", clean_t)
+    new_titles.append(clean_t)
+for t in new_titles:
+    print(t)
