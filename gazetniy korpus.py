@@ -125,7 +125,7 @@ for i in range (0,len(abs_fin_links)):
         if not os.path.exists(path):
             os.makedirs(path)
         name = 'Статья' + str[i]+'.txt'
-        f=open(name,'w', encoding='UTF-8')
+        f=open(газета/main/year/month/name,'w', encoding='UTF-8')
         f.write(file_top)
         f.write(text_article)
         f.close()
