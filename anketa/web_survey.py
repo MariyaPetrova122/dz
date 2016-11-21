@@ -20,7 +20,6 @@ answers = []
 def get_data():
     all_answers = json.dumps(request.args, ensure_ascii = False)
     new_answers = json.loads(all_answers) #класс - словарь
-    #answers.append(new_answers) # класс - список #дозаписываем в список новый словарь с ответами пользователя
     with open('people_responds_temp.json', 'w', encoding = 'utf-8-sig') as f:
         json.dump(new_answers, f, ensure_ascii = False) #складываем ответы
     f.close()
@@ -83,27 +82,27 @@ def get_stats():
 @app.route('/search')
 def search():
     if request.args:
-        number = request.args[number]
-        gender = request.args [gender]
-        if request.args[gender] == 'woman':
-            if request.args[number] == '1':
+        number = request.args['number']
+        gender = request.args ['gender']
+        if request.args['gender'] == 'woman':
+            if request.args['number'] == '1':
                 here_we_go = w_1
-            elif request.args[number] == '2':
+            elif request.args['number'] == '2':
                 here_we_go = w_2
-            elif request.args[number] == '3':
+            elif request.args['number'] == '3':
                 here_we_go = w_3
-            elif request.args[number] == '4':
+            elif request.args['number'] == '4':
                 here_we_go = w_4
             else:
                 here_we_go = w_5
         else:
-            if request.args[number] == '1':
+            if request.args['number'] == '1':
                 here_we_go = m_1
-            elif request.args[number] == '2':
+            elif request.args['number'] == '2':
                 here_we_go = m_2
-            elif request.args[number] == '3':
+            elif request.args['number'] == '3':
                 here_we_go = m_3
-            elif request.args[number] == '4':
+            elif request.args['number'] == '4':
                 here_we_go = m_4
             else:
                 here_we_go = m_5
