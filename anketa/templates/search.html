@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск по данным</title>
+</head>
+<body>
+<h1>Эмоционально-окрашенная речь<h1>
+
+<form action='http://127.0.0.1:5000/results'>
+<p>Укажите, какие данные вас интересуют</p>
+    <p>Укажите номер высказывания (от 1 до 5), чтобы узнать ответы других информантов</p>
+    <label>Номер  высказывания<input type="text" name="number"> </label><br>
+	<p>Укажите пол информантов, чтобы узнать их ответы</p>
+    <label><input name="gender" type="radio" value="men"></label>Мужчины<br>
+	<label><input name="gender" type="radio" label value="women">Женщины<br>
+
+<input type="submit" value="Поиск">
+</form>
+</body>
+</html>
