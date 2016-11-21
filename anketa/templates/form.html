@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Опрос</title>
+</head>
+<body>
+<h1>Эмоционально-окрашенная речь<h1>
+<style>
+ P {
+ font-size: 65 px;}
+</style>
+<form action='http://127.0.0.1:5000/json'>
+<p>Пожалуйста, расскажите немного о себе</p>
+    <label>Имя:  <input type="text" name="name"> </label><br>
+    <label>Возраст:  <input type="text" name="age"></label><br>
+    <label>Пол  <input name="gender" type="radio" value="man"></label>Мужчина<br>
+	<label><input name="gender" type="radio" label value="woman">Женщина<br>
+<h2>Как вы думаете, какую эмоцию испытывает говорящий при произнесении данной фразы? </h2>	
+<ul>
+{% for number,sentence in list_of_sentences.items() %}
+{{ sentence}}
+ 
+    <label><input type="text" name="{{number}}"></label><br>
+
+{% endfor %}
+</ul>
+<input type="submit" value="Завершить">
+</form>
+</body>
+</html>
