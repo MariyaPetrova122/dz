@@ -99,3 +99,20 @@ for i in sorted(subtract_all): # sorted - для алфавитного поря
     f.write(i + '\n')
 f.close()
 
+#ниже дополнительное задание на 10
+
+popular_words = []
+all_words = first+second+third+fourth #собираем список из всех слов со всех статей
+
+for i in all_words:
+    if all_words.count(i)> 1: #проверяем, встречается ли слово в этом списке, больше чем 1 раз
+        popular_words.append(i) #если да, то добавляем его в список "популярных слов"
+    else:
+        continue
+         
+subtract_popular_words = set(popular_words) - cross_all #избавляемся от слов. которые "популярные", но встречаются во всех статьях
+
+f = open('popular_subtract.txt','w')
+for i in sorted(set(subtract_popular_words)):
+    f.write(i + '\n')
+f.close()
