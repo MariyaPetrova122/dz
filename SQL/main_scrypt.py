@@ -15,9 +15,7 @@ table_rightpunc = {} #ключ - словоформа, значение - пун
 
 while i<len(a)and k<len(a)/2:
     parts = a[i].split('{')
-    #print(parts[0])
     info = parts[1].split('=')
-    #print(info[0])
     table_lemma[parts[0]] = info[0] #parts[0] = словоформы, info[0] = леммы
     table_number[k] = parts[0]
     table_leftpunc[k] = a[j] #a[j] = пунктуация
