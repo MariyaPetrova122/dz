@@ -40,3 +40,5 @@ file = open('wordlist.txt','w',encoding = 'UTF-8')
 file.write(special_words)
 file.close()
 
+import os
+os.system(r'C:\Python34\exam\mystem.exe -nid C:\Python34\exam\adyghe-unparsed-words.txt C:\Python34\exam\output.txt')
