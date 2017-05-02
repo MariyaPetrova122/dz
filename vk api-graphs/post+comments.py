@@ -52,15 +52,15 @@ k = 0
 while k<len(all_users):
     user_info.append([all_users[k],len(all_comments[k].split(' '))])
     k+=1
-'''
-f = open('posts.txt','w',encoding = 'utf-8' #создаем текстовый файл с инф-ей о постах
+
+f = open('posts.txt','w',encoding = 'utf-8')
 for one_post in post_info:
-    f.write('Текст поста:'+'\n'+one_post[1]+'Длина поста = '+one_post[2])
+    f.write('Текст поста:'+'\n'+str(one_post[1])+'\n'+'Длина поста = '+'\n'+str(one_post[2])+'\n')
 f.close()
 
 with open('comments.txt', 'w',encoding='utf-8') as outfile: #создаем текстовый файл с инф-ей о комментариях
     json.dump(final_com, outfile, ensure_ascii=False)
-'''
+
 
 cities = []
 for user in all_users:
@@ -85,7 +85,7 @@ for user in all_users:
         birthdays.append([user,data['response'][0]['bdate']])
 
 
-post_com_len = {} #собираем массив с парами "длина поста" - "средняя длина комментариев к нему"
+post_com_len = {} #собираем словарь с парами "длина поста" - "средняя длина комментариев к нему"
 for one in post_info:
     post_com_len[one[2]]=general_length[one[0]]
 
@@ -98,6 +98,8 @@ def average_len(user_info,id_key): #функция дает на выходе с
         else:
             smart_user_info[c[0]] = [c[1]]
     keys = {} #словарь, ключ - город(возраст), значения -  id юзеров из этого города(возраста)
+    #if u[1] in id_key:
+    for u in id_key:
         if u[1] in keys:
             keys[u[1]].append(u[0])
         else:
@@ -119,7 +121,7 @@ def year(s): #найти год
     return int(s[-4:]) if '.' not in s[-4:] else -1
 
 def id_age(birthdays): #найти возраст
-    return [[u[0], 2017 - year(u[1])] for u in id_year if year(u[1]) > 0]
+    return [[u[0], 2017 - year(u[1])] for u in birthdays if year(u[1]) > 0]
 
 avg_by_city = average_len(user_info, cities)
 avg_by_age = average_len(user_info, id_age(birthdays))
@@ -133,18 +135,21 @@ def dict_to_xy(d): #сделать из словаря два массива д�
     return x, y
 
 def plot_text(X, Y, header, xlabel, ylabel):
+    plt.clf()
     style.use('ggplot')
     plt.figure(figsize=(30,15))
     plt.grid(True, color = 'black')  #вид сетки
     plt.xticks(range(len(X)), X, rotation = 90)
-    plt.scatter(range(len(X)), Y, color = 'red', s = 10)
+    plt.scatter(range(len(X)), Y, color = 'red', s = 25)
     plt.title(header)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.savefig(header)
+    plt.close()
 
 
 def plot_numbers(X, Y, header, xlabel, ylabel):
+    plt.clf()
     style.use('ggplot')
     plt.grid(True, color = 'black')  #вид сетки
     plt.scatter(X, Y, color = 'red', s = 5)
@@ -152,15 +157,13 @@ def plot_numbers(X, Y, header, xlabel, ylabel):
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.savefig(header)
+    plt.close()
 
-x, y = stats.dict_to_xy(post_com_len)
-plot.plot_numbers(X, Y, 'Соотношение длины поста с длинной комментариев','Средняя длина комментариев', 'Длина поста')
+x, y = dict_to_xy(post_com_len)
+plot_numbers(x, y, 'Соотношение длины поста с длинной комментариев','Средняя длина комментариев', 'Длина поста')
 
-x, y = stats.dict_to_xy(avg_by_city)
-plot.plot_text(x, y, 'avg_by_city', 'city', 'avg')
+x, y = dict_to_xy(avg_by_city)
+plot_text(x, y, 'Соотношение города с длиной комментариев', 'Город', 'Средняя длина комментариев')
 
-x, y = stats.dict_to_xy(avg_by_age)
-plot.plot_numbers(x, y, 'avg_by_age', 'age', 'avg')
-
-
-
+x, y = dict_to_xy(avg_by_age)
+plot_numbers(x, y, 'Соотношение возраста с длиной комментариев', 'Возраст', 'Средняя длина комментариев')
