@@ -15,9 +15,9 @@ app = flask.Flask(__name__)
 def send_welcome(message):
 	bot.send_message(message.chat.id, "Привет! Этот бот считает количество слов в вашем сообщении.")
 
-@bot.message_handler(func=lambda m: True)  # этот обработчик реагирует на любое сообщение
+@bot.message_handler(func=lambda m: True)  
 def send_len(message):
-	bot.send_message(message.chat.id, 'В вашем сообщении {} слов.'.format(len(message.text).split(' ')))
+	bot.send_message(message.chat.id, 'Количество слов в вашем сообщении = {}.'.format(len(message.text.split(' '))))
 
 @app.route('/', methods=['GET', 'HEAD'])
 def index():
