@@ -16,7 +16,7 @@ bot.set_webhook(url=WEBHOOK_URL_BASE+WEBHOOK_URL_PATH)
 app = flask.Flask(__name__)
 
 # предположим, отзывы у нас хранятся в виде csv-файла с номерами отзывов и собственно текстами
-with open('/home/2016learnpython/myapp/reviews.csv', 'r', encoding='utf-8') as f:
+with open('/home/learnpython2016/myapp/reviews.csv', 'r', encoding='utf-8') as f: #если что замутить сээсви у себя в директории
     reviews = {}  # создадим словать отзывов
     for line in f:
         num, text = line.strip().split('\t')
@@ -33,7 +33,7 @@ keyboard.add(btn1, btn2, btn3)
 
 # shelve используется как мини-база данных, там можно хранить файлы в виде "ключ-значение"
 # в этой базе мы будем хранить информацию о том, какой отзыв мы недавно прислали юзеру
-shelve_name = '/home/USERNAME/myapp/shelve.db'  # Файл с хранилищем
+shelve_name = '/home/yourbots/review_bot/shelve.db'  # Файл с хранилищем
 
 def set_user_review(chat_id, review):
     """
@@ -74,7 +74,7 @@ def get_answer(message):
     review_num = get_user_review(message.chat.id)  # проверяем, есть ли юзер в базе данных
     if review_num:
         # если есть, открываем файл с результатами и записываем туда разметку
-        with open('/home/USERNAME/myapp/results.csv', 'a', encoding='utf-8') as results:
+        with open('/home/yourbots/review_bot/results.csv', 'a', encoding='utf-8') as results:
             results.write(review_num + '\t' + message.text + '\n')
         # и сразу отправляем новый отзыв
         review_num = random.choice(review_keys)
