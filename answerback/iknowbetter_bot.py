@@ -10,7 +10,7 @@ def sep_words(m):
     #у маши все плохо, потому что курица ест дерево
     reg = re.compile('[a-яА-Я0-9]+|[.,;:?!]+')
     return reg.findall(m)
-  
+
 
 def get_me_a_word(m):
     #print(morph.parse(m))
@@ -30,7 +30,7 @@ def get_me_a_word(m):
 
 lemms = {}
 
-f = open('1grams-3.txt','r',encoding = 'utf-8')
+f = open('/home/thatsthebot/mysite/1grams-3.txt','r',encoding = 'utf-8')
 data = f.readlines()
 data = data[:10000]
 for i in data:
@@ -42,9 +42,6 @@ for i in data:
         lemms[key].append(first.word)
     else:
         lemms[key] = [first.word]
-#print(lemms)
-#print(sum([len(v) for k, v in lemms.items()]))
-
 
 WEBHOOK_URL_BASE = "https://{}:{}".format(conf.WEBHOOK_HOST, conf.WEBHOOK_PORT)
 WEBHOOK_URL_PATH = "/{}/".format(conf.TOKEN)
@@ -68,16 +65,18 @@ def send_welcome(message):
 def ask_for_phrase(message):
 	bot.send_message(message.chat.id, "Отправь же мне какую-нибудь фразу!")
 
-final_phrase = ''
+#final_phrase = ''
 
 @bot.message_handler(content_types=["text"])  # reacts to any text message
 def send_new_phrase(message):
+    final_phrase = ''
     #user_sent = input("enter text: ")
-    user_words = message.split()
+    user_words = (message.text).split()
     for m in user_words:
         for w in sep_words(m):
-            final_phrase += w          
-    tb.reply_to(message, final_phrase) #text
+            final_phrase += get_me_a_word(w) + ' '
+    #tb.reply_to(message, final_phrase) #text
+    bot.send_message(message.chat.id, 'А я бы сказал: {}'.format(final_phrase))
     #print(get_me_a_word(w), end = '')
     #print(end = ' ')
 
@@ -87,7 +86,7 @@ def index():
     return 'ok'
 
 
-# обрабатываем вызовы вебхука = функция, которая запускается, когда к нам постучался телеграм 
+# обрабатываем вызовы вебхука = функция, которая запускается, когда к нам постучался телеграм
 @app.route(WEBHOOK_URL_PATH, methods=['POST'])
 def webhook():
     if flask.request.headers.get('content-type') == 'application/json':
