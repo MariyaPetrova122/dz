@@ -76,7 +76,7 @@ def send_new_phrase(message):
         for w in sep_words(m):
             final_phrase += get_me_a_word(w) + ' '
     #tb.reply_to(message, final_phrase) #text
-    bot.send_message(message.chat.id, 'А я бы сказал: {}'.format(final_phrase))
+    bot.send_message(message.chat.id, 'Капибара бы сказала: {}'.format(final_phrase))
     #print(get_me_a_word(w), end = '')
     #print(end = ' ')
 
