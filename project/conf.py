@@ -1,0 +1,3 @@
+TOKEN = "416940401:AAHubJpLHIL4A9jM90JINUXSAeJW-646UFs"
+WEBHOOK_HOST = 'bigbrother.pythonanywhere.com'
+WEBHOOK_PORT = '443'
