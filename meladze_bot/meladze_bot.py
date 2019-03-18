@@ -3,6 +3,12 @@
 import flask
 import telebot
 import conf
+from telegram.ext import Updater, CommandHandler
+import logging
+import telegram
+from gensim.models.doc2vec import Doc2Vec
+from nltk.tokenize import word_tokenize
+
 
 from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
@@ -35,9 +41,9 @@ greet_kb = ReplyKeyboardMarkup(
 async def process_start_command(message: types.Message):
     await message.reply("Привет, Валера! Я скучал.", reply_markup=kb.greet_kb)
 
-@bot.message_handler(func=lambda m: True)  # этот обработчик реагирует все прочие сообщения
+'''@bot.message_handler(func=lambda m: True)  # этот обработчик реагирует все прочие сообщения
 def send_len(message):
-	bot.send_message(message.chat.id, 'В вашем сообщении {} символов.'.format(len(message.text)))
+	bot.send_message(message.chat.id, 'В вашем сообщении {} символов.'.format(len(message.text)))'''
   
 button1 = KeyboardButton('Давай поговорим, мне нужно излить душу.)
 button2 = KeyboardButton('Хочу песню!')
@@ -53,7 +59,7 @@ async def process_hi3_command(message: types.Message):
 @dp.callback_query_handler(func=lambda c: c.data == 'button1')
 async def process_callback_button1(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
-    await bot.send_message(callback_query.from_user.id, 'Нажата первая кнопка!')
+    await bot.send_message(callback_query.from_user.id, 'Если вдруг что-то было не так, то как же не поговорить об этом?')
     chat_handler = CommandHandler('talk', lets_talk, pass_args=True)
     updater.dispatcher.add_handler(chat_handler)
 			 
